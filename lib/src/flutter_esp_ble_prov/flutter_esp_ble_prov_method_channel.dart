@@ -19,6 +19,7 @@ class MethodChannelFlutterEspBleProv extends FlutterEspBleProvPlatform {
   @override
   Future<List<String>> scanBleDevices(String prefix) async {
     final args = {'prefix': prefix};
+    await methodChannel.invokeMethod<List<Object?>>('resetBleDevices');
     final raw =
         await methodChannel.invokeMethod<List<Object?>>('scanBleDevices', args);
     final List<String> devices = [];
