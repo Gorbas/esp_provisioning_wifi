@@ -141,6 +141,7 @@ class Boss {
   private val logTag = "FlutterEspBleProv"
 
   // Method names as called from Flutter across the channel.
+  private val resetBleMethod = "resetBleDevices"
   private val scanBleMethod = "scanBleDevices"
   private val scanWifiMethod = "scanWifiNetworks"
   private val provisionWifiMethod = "provisionWifi"
@@ -203,6 +204,7 @@ class Boss {
       val ctx = CallContext(call, result)
       when (call.method) {
         platformVersionMethod -> getPlatformVersion(ctx)
+        resetBleMethod -> devices.clear()
         scanBleMethod -> bleScanner.call(ctx)
         scanWifiMethod -> wifiScanner.call(ctx)
         provisionWifiMethod -> wifiProvisioner.call(ctx)
