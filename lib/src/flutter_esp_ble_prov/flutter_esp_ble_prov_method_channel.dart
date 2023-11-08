@@ -59,8 +59,9 @@ class MethodChannelFlutterEspBleProv extends FlutterEspBleProvPlatform {
   }
 
   @override
-  Future<void> resetBleDevices() {
+  Future<bool?> resetBleDevices() {
     await methodChannel.invokeMethod<void>('resetBleDevices');
+    return true;
   }
 
 }

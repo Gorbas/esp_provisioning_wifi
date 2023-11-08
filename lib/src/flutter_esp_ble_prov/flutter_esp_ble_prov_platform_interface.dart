@@ -41,7 +41,7 @@ abstract class FlutterEspBleProvPlatform extends PlatformInterface {
     throw UnimplementedError('provisionWifi has not been implemented');
   }
 
-  Future<void> resetBleDevices() {
+  Future<bool?> resetBleDevices() {
     throw UnimplementedError('provisionWifi has not been implemented');
   }
 }
