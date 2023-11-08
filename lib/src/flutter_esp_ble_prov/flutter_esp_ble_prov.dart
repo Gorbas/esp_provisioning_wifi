@@ -33,4 +33,9 @@ class FlutterEspBleProv {
   Future<String?> getPlatformVersion() {
     return FlutterEspBleProvPlatform.instance.getPlatformVersion();
   }
+
+  /// Reset list of scanned devices
+  Future<bool?> resetBleDevices() {
+    return FlutterEspBleProvPlatform.instance.resetBleDevices();
+  }
 }
