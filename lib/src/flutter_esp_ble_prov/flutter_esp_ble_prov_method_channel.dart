@@ -53,7 +53,9 @@ class MethodChannelFlutterEspBleProv extends FlutterEspBleProvPlatform {
       'ssid': ssid,
       'passphrase': passphrase
     };
-    await methodChannel.invokeMethod<List<Object?>>('resetBleDevices');
-    return await methodChannel.invokeMethod<bool?>('provisionWifi', args);
+    final result =
+        await methodChannel.invokeMethod<bool?>('provisionWifi', args);
+    await methodChannel.invokeMethod<void>('resetBleDevices');
+    return result;
   }
 }
