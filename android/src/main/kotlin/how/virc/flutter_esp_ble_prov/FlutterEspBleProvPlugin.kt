@@ -204,13 +204,18 @@ class Boss {
       val ctx = CallContext(call, result)
       when (call.method) {
         platformVersionMethod -> getPlatformVersion(ctx)
-        resetBleMethod -> devices.clear()
+        resetBleMethod -> resetBleMethod(ctx)
         scanBleMethod -> bleScanner.call(ctx)
         scanWifiMethod -> wifiScanner.call(ctx)
         provisionWifiMethod -> wifiProvisioner.call(ctx)
         else -> result.notImplemented()
       }
     })
+  }
+
+  private func resetBleMethod(ctx: CallContext) {
+    devices.clear()
+    ctx.result.success(true)
   }
 
   private fun getPlatformVersion(ctx: CallContext) {
