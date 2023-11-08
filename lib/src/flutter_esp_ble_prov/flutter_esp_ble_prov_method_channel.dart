@@ -55,7 +55,12 @@ class MethodChannelFlutterEspBleProv extends FlutterEspBleProvPlatform {
     };
     final result =
         await methodChannel.invokeMethod<bool?>('provisionWifi', args);
-    await methodChannel.invokeMethod<void>('resetBleDevices');
     return result;
   }
+
+  @override
+  Future<void> resetBleDevices() {
+    await methodChannel.invokeMethod<void>('resetBleDevices');
+  }
+
 }
