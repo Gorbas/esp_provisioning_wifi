@@ -19,7 +19,6 @@ class MethodChannelFlutterEspBleProv extends FlutterEspBleProvPlatform {
   @override
   Future<List<String>> scanBleDevices(String prefix) async {
     final args = {'prefix': prefix};
-    await methodChannel.invokeMethod<List<Object?>>('resetBleDevices');
     final raw =
         await methodChannel.invokeMethod<List<Object?>>('scanBleDevices', args);
     final List<String> devices = [];
@@ -54,6 +53,7 @@ class MethodChannelFlutterEspBleProv extends FlutterEspBleProvPlatform {
       'ssid': ssid,
       'passphrase': passphrase
     };
+    await methodChannel.invokeMethod<List<Object?>>('resetBleDevices');
     return await methodChannel.invokeMethod<bool?>('provisionWifi', args);
   }
 }
