@@ -267,7 +267,8 @@ class BleScanManager(boss: Boss) : ActionManager(boss) {
       }
 
       override fun onFailure(e: java.lang.Exception?) {
-        TODO("Not yet implemented")
+          boss.e("onFailure: error $e")
+          ctx.result.error("B2", "Bluetooth scan failed", "Exception details $e")
       }
 
     })
