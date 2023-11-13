@@ -251,7 +251,8 @@ class BleScanManager(boss: Boss) : ActionManager(boss) {
 
     boss.espManager.searchBleEspDevices(prefix, object : BleScanListener {
       override fun scanStartFailed() {
-        TODO("Not yet implemented")
+          boss.e("scanStartFailed error")
+          ctx.result.error("B1", "Bluetooth scan failed", "Check Bluetooth service")
       }
 
       override fun onPeripheralFound(device: BluetoothDevice?, scanResult: ScanResult?) {
