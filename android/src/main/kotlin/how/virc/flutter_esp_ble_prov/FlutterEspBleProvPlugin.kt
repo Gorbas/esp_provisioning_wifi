@@ -287,13 +287,21 @@ class WifiScanManager(boss: Boss) : ActionManager(boss) {
       esp.scanNetworks(object : WiFiScanListener {
         override fun onWifiListReceived(wifiList: ArrayList<WiFiAccessPoint>?) {
           wifiList ?: return
-          wifiList.forEach { boss.networks.add(it.wifiName) }
+          int countBefore = boss.networds.size;
+          wifiList.forEach {
+            if (!boss.networks.contains(it.wifiName)) {
+              boss.networks.add(it.wifiName)
+            }
+          }
+          int countAdded = boss.networds.size - countBefore;
           boss.d("scanNetworks: complete ${boss.networks}")
           Handler(Looper.getMainLooper()).post {
             ctx.result.success(ArrayList<String>(boss.networks))
           }
           boss.d("scanNetworks: complete 2 ${boss.networks}")
-          esp.disconnectDevice()
+          if (countAdded == 0) {
+            esp.disconnectDevice()
+          }
         }
 
         override fun onWiFiScanFailed(e: java.lang.Exception?) {
