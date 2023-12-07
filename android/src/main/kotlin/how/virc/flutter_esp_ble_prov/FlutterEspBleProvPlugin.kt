@@ -213,7 +213,7 @@ class Boss {
     })
   }
 
-  private fun resetBleMethod(ctx: CallContext) {
+  private func resetBleMethod(ctx: CallContext) {
     devices.clear()
     ctx.result.success(true)
   }
@@ -246,8 +246,6 @@ class BleScanManager(boss: Boss) : ActionManager(boss) {
   override fun call(ctx: CallContext) {
     boss.d("searchBleEspDevices: start")
     val prefix = ctx.arg("prefix") ?: return
-
-    boss.devices.clear()
 
     boss.espManager.searchBleEspDevices(prefix, object : BleScanListener {
       override fun scanStartFailed() {

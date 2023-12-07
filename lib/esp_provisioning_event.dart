@@ -8,8 +8,6 @@ abstract class EspProvisioningEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class EspProvisioningEventClear extends EspProvisioningEvent {}
-
 /// A class that represents the start of the provisioning process
 class EspProvisioningEventStart extends EspProvisioningEvent {
   final String bluetoothDevicePrefix;
