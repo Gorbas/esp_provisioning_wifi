@@ -13,6 +13,7 @@ import 'esp_provisioning_state.dart';
 class EspProvisioningBloc
     extends Bloc<EspProvisioningEvent, EspProvisioningState> {
   EspProvisioningBloc() : super(const EspProvisioningState()) {
+    on<EspProvisioningEventClear>(_onClear);
     on<EspProvisioningEventStart>(_onStart);
     on<EspProvisioningEventBleSelected>(_onBleSelected);
     on<EspProvisioningEventWifiSelected>(_onWifiSelected);
@@ -21,6 +22,39 @@ class EspProvisioningBloc
   /// A late final variable that is assigned to the instance of the EspProvisioningService class.
   late final FlutterEspBleProv espProvisioningService =
       EspProvisioningService();
+
+  Future<void> _onClear(
+    EspProvisioningEventClear event,
+    Emitter<EspProvisioningState> emit,
+  ) async {
+    bool timedOut = false;
+    try {
+      emit(
+        state.copyWith(
+          status: EspProvisioningStatus.initial,
+          bluetoothDevice: "",
+          bluetoothDevices: List.empty(),
+          timedOut: timedOut,
+        ),
+      );
+      await espProvisioningService
+          .resetBleDevices()
+          .timeout(const Duration(seconds: TIMEOUT), onTimeout: () {
+        timedOut = true;
+        return false;
+      });
+      emit(
+        state.copyWith(
+          status: EspProvisioningStatus.initial,
+          bluetoothDevices: List.empty(),
+          timedOut: timedOut,
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(
+          status: EspProvisioningStatus.error, errorMsg: e.toString()));
+    }
+  }
 
   /// _onStart() is a function that is called when the EspProvisioningEventStart event is emitted
   ///
